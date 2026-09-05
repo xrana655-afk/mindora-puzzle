@@ -1,8 +1,17 @@
-Get started by following one of our Android quick start guides
-Follow the Android guide to configure your project and create the codemagic.yaml file.
-Save the codemagic.yaml file to the project root folder.
-Push the added file to the repository. From command line:
-git add codemagic.yaml
-git commit -m 'Add first workflow'
-git push
-Click the Check for configuration file button in the top right corner.
+workflows:
+  android-workflow:
+    name: Android Workflow
+    instance_type: mac_mini_m1
+    max_build_duration: 60
+    environment:
+      flutter: 3.19.6
+    scripts:
+      - name: Get Flutter packages
+        script: | 
+          flutter --version
+          flutter pub get
+      - name: Build APK
+        script: flutter build apk --release --no-tree-shake-icons
+    artifacts:
+      - build/app/outputs/flutter-apk/*.apk
+
